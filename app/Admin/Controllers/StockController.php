@@ -74,8 +74,8 @@ class StockController extends Controller
         return Admin::grid(Stock::class, function (Grid $grid) {
 
             // $grid->id('ID')->sortable();
-            $grid->column('name','名称')->sortable();
-            $grid->column('type','型号');
+            $grid->column('name','名称')->editable()->sortable();
+            $grid->column('type','型号')->editable();
             $grid->inventory('库存')->display(function ($inventory) {
                 return "<span class='label label-primary'>$inventory</span>";
             });
