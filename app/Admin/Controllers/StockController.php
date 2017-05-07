@@ -82,8 +82,8 @@ class StockController extends Controller
             $grid->inventory('库存')->display(function ($inventory) {
                 return "<span class='label label-primary'>$inventory</span>";
             });
-            $grid->cost('进价')->display(function ($price) {
-                return "<span class='label label-gray'>$price</span>";
+            $grid->cost('进价')->display(function ($cost) {
+                return "<span class='label label-info'>$cost</span>";
             });
             $grid->price('零售价')->editable();
 
