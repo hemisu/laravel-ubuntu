@@ -10,6 +10,10 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+use Encore\Admin\Widgets\Box;
 use App\Admin\Extensions\StockExporter;
 
 
@@ -122,4 +126,14 @@ class StockController extends Controller
             // $form->display('updated_at', '更新时间');
         });
     }
+    /**
+     * API
+     */
+     public function apiStock(Request $request)
+     {
+         $q = $request->get('q');
+
+         return Stock::where('name', 'like', "%$q%")
+         ->paginate(null, ['id',DB::raw("concat(name,' 规格:',type,' 目前零售价:',price) as text")]);
+     }
 }

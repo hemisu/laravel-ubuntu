@@ -11,5 +11,7 @@ Route::group([
 ], function (Router $router) {
 
     $router->get('/', 'HomeController@index');
+    Route::get('api/stock', 'StockController@apiStock');
     $router->resource('stock',StockController::class);
+    $router->resource('salerecord',SalesRecordController::class);
 });
