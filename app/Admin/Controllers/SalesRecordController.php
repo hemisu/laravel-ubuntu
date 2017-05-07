@@ -91,6 +91,14 @@ class SalesRecordController extends Controller
                     "<i class='fa fa-close' style='color:red'></i>";
             });
             $grid->updated_at('订单日期');
+            $grid->filter(function($filter){
+                $filter->useModal();
+                // 禁用id查询框
+                $filter->disableIdFilter();
+                $filter->is('id', '订单号');
+                $filter->between('updated_at', '创建时间')->datetime();
+            });
+            $grid->disableRowSelector();
             $grid->disableBatchDeletion();
             $grid->actions(function ($actions) {
               $actions->disableDelete();
