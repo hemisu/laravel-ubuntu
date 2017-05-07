@@ -10,6 +10,8 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
+use App\Admin\Extensions\StockExporter;
+
 
 class StockController extends Controller
 {
@@ -94,7 +96,7 @@ class StockController extends Controller
                 }, '名称或型号');
                 $filter->between('updated_at', '更新时间')->datetime();
             });
-
+            $grid->exporter(new StockExporter());
         });
     }
 
