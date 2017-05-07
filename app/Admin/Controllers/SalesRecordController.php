@@ -92,10 +92,10 @@ class SalesRecordController extends Controller
             });
             $grid->updated_at('订单日期');
             $grid->disableBatchDeletion();
-             $grid->actions(function ($actions) {
-                $actions->disableDelete();
-                // $actions->disableEdit();
-             });
+            $grid->actions(function ($actions) {
+              $actions->disableDelete();
+              // $actions->disableEdit();
+            });
         });
     }
 

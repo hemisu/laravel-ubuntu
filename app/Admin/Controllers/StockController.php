@@ -103,6 +103,11 @@ class StockController extends Controller
                 $filter->between('updated_at', '更新时间')->datetime();
             });
             $grid->exporter(new StockExporter());
+            $grid->disableBatchDeletion();
+            $grid->actions(function ($actions) {
+              $actions->disableDelete();
+              // $actions->disableEdit();
+            });
         });
     }
 
@@ -119,7 +124,7 @@ class StockController extends Controller
             $form->text('name', '名称')->rules('required|min:2');
             $form->text('type', '型号');
             $form->text('material', '货物材质');
-            $form->number('inventory', '库存');
+            $form->display('inventory', '库存');
             $form->currency('cost', '进价')->symbol('￥');
             $form->currency('price', '零售价')->symbol('￥');
             // $form->display('created_at', '创建时间');

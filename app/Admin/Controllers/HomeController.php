@@ -20,6 +20,7 @@ use Encore\Admin\Widgets\Tab;
 use Encore\Admin\Widgets\Table;
 
 use App\Model\Stock;
+use App\Model\SalesRecord;
 
 class HomeController extends Controller
 {
@@ -37,9 +38,10 @@ class HomeController extends Controller
                 foreach ($costInventory as $v) {
                   $amountCostInventory += $v->price * $v->inventory;
                 }
-                $row->column(6, new InfoBox('库存金额', 'dollar', 'aqua', '/admin/stock', $amountCostInventory));
+                $row->column(6, new InfoBox('库存金额', 'dollar', 'aqua', '/admin/stock', $amountCostInventory.'元'));
                 // $row->column(3, new InfoBox('New Users', 'users', 'aqua', '/admin/users', '1024'));
-                // $row->column(3, new InfoBox('New Orders', 'shopping-cart', 'green', '/admin/orders', '150%'));
+                $row->column(3, new InfoBox('日订单数', 'shopping-cart', 'red', '/admin/salerecord', SalesRecord::count().'单'));
+                $row->column(3, new InfoBox('日营销额', 'shopping-cart', 'green', '/admin/salerecord', SalesRecord::pluck('price')->sum().'元'));
                 // $row->column(3, new InfoBox('Articles', 'book', 'yellow', '/admin/articles', '2786'));
                 // $row->column(3, new InfoBox('Documents', 'file', 'red', '/admin/files', '698726'));
             });
