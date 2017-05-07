@@ -17,6 +17,7 @@ class CreateStockTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('type');
+            $table->string('material')->nullable();
             $table->string('image')->nullable();
             $table->double('price', 15, 2);
             $table->double('cost', 15, 2)->nullable();

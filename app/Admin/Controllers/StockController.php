@@ -78,12 +78,14 @@ class StockController extends Controller
             // $grid->id('ID')->sortable();
             $grid->column('name','名称')->editable()->sortable();
             $grid->column('type','型号')->editable();
+            $grid->column('material','货物材质')->editable();
             $grid->inventory('库存')->display(function ($inventory) {
                 return "<span class='label label-primary'>$inventory</span>";
             });
-            $grid->price('价格')->display(function ($price) {
-                return "<span class='label label-info'>$price</span>";
+            $grid->cost('进价')->display(function ($price) {
+                return "<span class='label label-gray'>$price</span>";
             });
+            $grid->price('零售价')->editable();
 
             // $grid->created_at();
             $grid->updated_at('更新时间');
@@ -109,13 +111,15 @@ class StockController extends Controller
     {
         return Admin::form(Stock::class, function (Form $form) {
 
-            $form->display('id', 'ID');
+            // $form->display('id', 'ID');
             $form->text('name', '名称')->rules('required|min:2');
             $form->text('type', '型号');
+            $form->text('material', '货物材质');
             $form->number('inventory', '库存');
-            $form->currency('price', '价格')->symbol('￥');
-            $form->display('created_at', 'Created At');
-            $form->display('updated_at', 'Updated At');
+            $form->currency('cost', '进价')->symbol('￥');
+            $form->currency('price', '零售价')->symbol('￥');
+            // $form->display('created_at', '创建时间');
+            // $form->display('updated_at', '更新时间');
         });
     }
 }
