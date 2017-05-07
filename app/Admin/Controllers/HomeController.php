@@ -19,17 +19,25 @@ use Encore\Admin\Widgets\InfoBox;
 use Encore\Admin\Widgets\Tab;
 use Encore\Admin\Widgets\Table;
 
+use App\Model\Stock;
+
 class HomeController extends Controller
 {
     public function index()
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('Dashboard');
-            $content->description('Description...');
+            $content->header('首页');
+            $content->description('基本信息显示');
+
 
             $content->row(function ($row) {
-                $row->column(3, new InfoBox('库存', 'users', 'aqua', '/admin/stock', '-'));
+                $costInventory = Stock::select('price','inventory')->get();
+                $amountCostInventory = 0;
+                foreach ($costInventory as $v) {
+                  $amountCostInventory += $v->price * $v->inventory;
+                }
+                $row->column(6, new InfoBox('库存金额', 'dollar', 'aqua', '/admin/stock', $amountCostInventory));
                 // $row->column(3, new InfoBox('New Users', 'users', 'aqua', '/admin/users', '1024'));
                 // $row->column(3, new InfoBox('New Orders', 'shopping-cart', 'green', '/admin/orders', '150%'));
                 // $row->column(3, new InfoBox('Articles', 'book', 'yellow', '/admin/articles', '2786'));
