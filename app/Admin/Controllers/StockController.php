@@ -105,7 +105,7 @@ class StockController extends Controller
             $grid->exporter(new StockExporter());
             $grid->disableBatchDeletion();
             $grid->actions(function ($actions) {
-              $actions->disableDelete();
+              // $actions->disableDelete();
               // $actions->disableEdit();
             });
         });
@@ -141,4 +141,5 @@ class StockController extends Controller
          return Stock::where('name', 'like', "%$q%")
          ->paginate(null, ['id',DB::raw("concat(name,' 规格:',type,' 目前零售价:',price) as text")]);
      }
+
 }

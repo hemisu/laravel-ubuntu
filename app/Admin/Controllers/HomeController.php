@@ -33,15 +33,16 @@ class HomeController extends Controller
 
 
             $content->row(function ($row) {
-                $costInventory = Stock::select('price','inventory')->get();
+                $costInventory = Stock::select('price','inventory')
+                                 ->get();
                 $amountCostInventory = 0;
                 foreach ($costInventory as $v) {
                   $amountCostInventory += $v->price * $v->inventory;
                 }
-                $row->column(6, new InfoBox('库存金额', 'dollar', 'aqua', '/admin/stock', $amountCostInventory.'元'));
-                // $row->column(3, new InfoBox('New Users', 'users', 'aqua', '/admin/users', '1024'));
-                $row->column(3, new InfoBox('日订单数', 'shopping-cart', 'red', '/admin/salerecord', SalesRecord::count().'单'));
-                $row->column(3, new InfoBox('日营销额', 'shopping-cart', 'green', '/admin/salerecord', SalesRecord::pluck('price')->sum().'元'));
+                $row->column(3, new InfoBox('库存金额', 'dollar', 'aqua', '/admin/stock', $amountCostInventory.'元'));
+                $row->column(3, new InfoBox('月订单数', 'shopping-cart', 'yellow', '/admin/users', SalesRecord::whereMonth('created_at', date('m',time()))->count().'单'));
+                $row->column(3, new InfoBox('日订单数', 'shopping-cart', 'red', '/admin/salerecord', SalesRecord::whereDate('created_at', date('Y-m-d',time()))->count().'单'));
+                $row->column(3, new InfoBox('日营销额', 'shopping-cart', 'green', '/admin/salerecord', SalesRecord::whereDate('created_at', date('Y-m-d',time()))->pluck('price')->sum().'元'));
                 // $row->column(3, new InfoBox('Articles', 'book', 'yellow', '/admin/articles', '2786'));
                 // $row->column(3, new InfoBox('Documents', 'file', 'red', '/admin/files', '698726'));
             });
