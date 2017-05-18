@@ -84,7 +84,14 @@ class StockController extends Controller
             $grid->column('type','型号')->editable();
             $grid->column('material','货物材质')->editable();
             $grid->inventory('库存')->display(function ($inventory) {
-                return "<span class='label label-primary'>$inventory</span>";
+                if($inventory <= 0){
+                  return "<span class='label label-primary'>$inventory</span>";
+                }else if($inventory > 0 && $inventory < 3){
+                  return "<span class='label label-warning'>$inventory</span>";
+                }else{
+                  return "<span class='label label-danger'>$inventory</span>";
+                }
+
             });
             $grid->cost('进价')->display(function ($cost) {
                 return "<span class='label label-info'>$cost</span>";
