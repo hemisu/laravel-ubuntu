@@ -120,7 +120,7 @@ class SalesRecordController extends Controller
             $form->hidden('id');
             $form->select('stock_id','车辆型号规格')->options(
               Stock::all()->mapWithKeys(function ($item) {
-                return [$item['id'] => $item['name'].' 规格:'.$item['type'].' 目前零售价:'.$item['price']];
+                return [$item['id'] => $item['name'].' 规格:'.$item['type'].' 材质:'.$item['material'].' 目前零售价:'.$item['price']];
             })
               )->ajax('/admin/api/stock');
             $form->currency('price', '销售金额')->symbol('￥');
