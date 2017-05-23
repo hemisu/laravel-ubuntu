@@ -146,7 +146,7 @@ class StockController extends Controller
          $q = $request->get('q');
 
          return Stock::where('name', 'like', "%$q%")
-         ->paginate(null, ['id',DB::raw("concat(name,' 规格:',type,' 材质:',material,' 目前零售价:',price) as text")]);
+         ->paginate(null, ['id',DB::raw("concat(name,' 规格:',type,' 目前零售价:',price) as text")]);
      }
 
 }
