@@ -109,6 +109,7 @@ class StockController extends Controller
                 }, '名称或型号');
                 $filter->between('updated_at', '更新时间')->datetime();
             });
+            $grid->model()->orderBy('created_at','desc');
             $grid->exporter(new StockExporter());
             $grid->disableBatchDeletion();
             $grid->actions(function ($actions) {
