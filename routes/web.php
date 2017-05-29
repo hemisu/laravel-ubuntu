@@ -14,7 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/deploy', 'DeploymentController@pull');
+// Route::get('/deploy', 'DeploymentController@pull');
 // Route::get('/info', function(){
 //   return phpinfo();
 // });
