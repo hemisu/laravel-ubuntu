@@ -25,4 +25,16 @@ class DeploymentController extends Controller
   {
     return 'sha1=' . hash_hmac('sha1', $payload, env('GITHUB_DEPLOY_TOKEN'), false) === $signature;
   }
+  public function pull()
+  {
+    $commands = ['sudo cd /var/www/laravel-ubuntu', 'sudo git pull'];
+
+
+    foreach ($commands as $command) {
+        $output = shell_exec($command);
+        print_r($output);
+    }
+    http_response_code(200);
+
+  }
 }
