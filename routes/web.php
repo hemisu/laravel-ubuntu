@@ -14,7 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
-// Route::post('/deploy', 'DeploymentController@deploy');
-Route::get('/info', function(){
-  return phpinfo();
-});
+Route::post('/deploy', 'DeploymentController@deploy');
+// Route::get('/info', function(){
+//   return phpinfo();
+// });
