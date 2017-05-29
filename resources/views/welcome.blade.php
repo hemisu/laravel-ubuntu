@@ -79,7 +79,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel stock for fycy 2
+                    Laravel stock for fycy 3
                 </div>
 
                 <div class="links">
