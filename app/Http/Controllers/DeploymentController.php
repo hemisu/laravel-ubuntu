@@ -8,7 +8,7 @@ class DeploymentController extends Controller
 {
   public function deploy(Request $request)
   {
-    $commands = ['cd /var/www/laravel-ubuntu', 'git pull'];
+    $commands = ['sudo cd /var/www/laravel-ubuntu', 'sudo git pull'];
     $signature = $request->header('X-Hub-Signature');
     $payload = file_get_contents('php://input');
     if ($this->isFromGithub($payload, $signature)) {
