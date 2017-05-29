@@ -98,7 +98,7 @@ class SalesRecordController extends Controller
                 $filter->is('id', '订单号');
                 $filter->between('updated_at', '创建时间')->datetime();
             });
-            $grid->model()->orderBy('created_at','desc');
+            $grid->model()->orderBy('created_at','desc'); 
             $grid->disableRowSelector();
             $grid->disableBatchDeletion();
             $grid->actions(function ($actions) {
