@@ -59,16 +59,21 @@ class HomeController extends Controller
                   $daysales[] = SalesRecord::whereDate('created_at', $value)->pluck('price')->sum();
                   $daysalesAmount[] = SalesRecord::whereDate('created_at', $value)->count();
                 }
+                $daysalesbar = new Bar(
+                            $time,
+                            [
+                                ['日订单数', $daysalesAmount, '#dd4b39'],
+                            ]
+                        );
                 $bar = new Bar(
                             $time,
                             [
-                                ['日营销额', $daysales],
-                                ['日订单数', $daysalesAmount],
-                                // ['Third', [33,82,34,56,87,12,56]],
-                                // ['Forth', [34,25,67,12,48,91,16]],
+                                ['日营销额', $daysales, '#00a65a'],
                             ]
                         );
-                $row->column(12, $bar);
+                $row->column(6,(new Box('日订单数', $daysalesbar))->style('danger')->solid());
+                $row->column(6,(new Box('日营销额', $daysalesbar))->style('success')->solid());
+
             });
             //
             // $content->row(function (Row $row) {
