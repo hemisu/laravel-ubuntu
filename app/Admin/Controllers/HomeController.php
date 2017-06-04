@@ -22,6 +22,7 @@ use Encore\Admin\Widgets\Table;
 use App\Model\Stock;
 use App\Model\SalesRecord;
 
+use Carbon\Carbon;
 class HomeController extends Controller
 {
     public function index()
@@ -45,6 +46,28 @@ class HomeController extends Controller
                 $row->column(3, new InfoBox('日营销额', 'shopping-cart', 'green', '/admin/salerecord', SalesRecord::whereDate('created_at', date('Y-m-d',time()))->pluck('price')->sum().'元'));
                 // $row->column(3, new InfoBox('Articles', 'book', 'yellow', '/admin/articles', '2786'));
                 // $row->column(3, new InfoBox('Documents', 'file', 'red', '/admin/files', '698726'));
+            });
+            $content->row(function (Row $row) {
+                //最近7天统计表
+                $dt = Carbon::now()->subDay(6);
+                for ($i = 0; $i < 7; $i++) {
+                 $time[] = $dt->format('Y-m-d');
+                 $dt->addDay();
+                }
+                $daysales = [];
+                foreach ($time as $value) {
+                  $daysales[] = SalesRecord::whereDate('created_at', $value)->pluck('price')->sum();
+                }
+                $bar = new Bar(
+                            $time,
+                            [
+                                ['日营销额', $daysales],
+                                // ['Second', [93,23,12,23,75,21,88]],
+                                // ['Third', [33,82,34,56,87,12,56]],
+                                // ['Forth', [34,25,67,12,48,91,16]],
+                            ]
+                        );
+                $row->column(12, $bar);
             });
             //
             // $content->row(function (Row $row) {
