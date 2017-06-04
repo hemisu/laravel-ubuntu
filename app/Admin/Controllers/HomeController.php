@@ -57,12 +57,13 @@ class HomeController extends Controller
                 $daysales = [];
                 foreach ($time as $value) {
                   $daysales[] = SalesRecord::whereDate('created_at', $value)->pluck('price')->sum();
+                  $daysalesAmount[] = SalesRecord::whereDate('created_at', $value)->count();
                 }
                 $bar = new Bar(
                             $time,
                             [
                                 ['日营销额', $daysales],
-                                // ['Second', [93,23,12,23,75,21,88]],
+                                ['日订单数', $daysalesAmount],
                                 // ['Third', [33,82,34,56,87,12,56]],
                                 // ['Forth', [34,25,67,12,48,91,16]],
                             ]
