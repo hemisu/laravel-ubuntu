@@ -65,14 +65,14 @@ class HomeController extends Controller
                                 ['日订单数', $daysalesAmount, '#dd4b39'],
                             ]
                         );
-                $bar = new Bar(
+                $daysalesAmountbar = new Bar(
                             $time,
                             [
                                 ['日营销额', $daysales, '#00a65a'],
                             ]
                         );
                 $row->column(6,(new Box('日订单数', $daysalesbar))->style('danger')->solid());
-                $row->column(6,(new Box('日营销额', $daysalesbar))->style('success')->solid());
+                $row->column(6,(new Box('日营销额', $daysalesAmountbar))->style('success')->solid());
 
             });
             //
