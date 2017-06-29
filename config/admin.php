@@ -120,4 +120,8 @@ return [
      * Version displayed in footer.
      */
     'version'   => '1.0',
+    /*
+     * Laravel-admin customize.
+     */
+    'logintitle'  => '丰舆车业',
 ];

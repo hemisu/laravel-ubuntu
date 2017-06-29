@@ -3,7 +3,16 @@
 use Illuminate\Routing\Router;
 
 Admin::registerHelpersRoutes();
+Route::group([
+    'prefix'        => config('admin.prefix'),
+    'namespace'     => Admin::controllerNamespace(),
+    'middleware'    => ['web', 'admin'],
+], function (Router $router) {
 
+    $router->get('auth/login', 'AuthController@getLogin');
+    $router->post('auth/login', 'AuthController@postLogin');
+
+});
 Route::group([
     'prefix'        => config('admin.prefix'),
     'namespace'     => Admin::controllerNamespace(),
@@ -11,6 +20,8 @@ Route::group([
 ], function (Router $router) {
 
     $router->get('/', 'HomeController@index');
+    $router->get('auth/login', 'AuthController@getLogin');//login
+    $router->post('auth/login', 'AuthController@postLogin');//login
     Route::get('api/stock', 'StockController@apiStock');
     Route::get('api/client', 'ClientController@apiClient');
     $router->resource('stock',StockController::class);
