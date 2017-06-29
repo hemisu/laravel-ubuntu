@@ -10,4 +10,12 @@ class SalesRecord extends Model
     {
         return $this->belongsTo('App\Model\Stock');
     }
+    public function client()
+    {
+        return $this->belongsTo('App\Model\Client');
+    }
+    public function staff()
+    {
+        return $this->belongsTo('App\Model\Staff');
+    }
 }

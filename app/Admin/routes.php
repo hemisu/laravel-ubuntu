@@ -12,6 +12,9 @@ Route::group([
 
     $router->get('/', 'HomeController@index');
     Route::get('api/stock', 'StockController@apiStock');
+    Route::get('api/client', 'ClientController@apiClient');
     $router->resource('stock',StockController::class);
     $router->resource('salerecord',SalesRecordController::class);
+    $router->resource('client',ClientController::class);
+    $router->resource('staff',StaffController::class);
 });

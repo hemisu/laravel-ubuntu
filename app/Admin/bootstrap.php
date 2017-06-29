@@ -19,3 +19,9 @@
  */
 
 Encore\Admin\Form::forget(['map', 'editor']);
+use Encore\Admin\Grid\Column;
+Column::extend('prependIcon', function ($value, $icon) {
+
+    return "<span style='color: #777;'><i class='fa fa-$icon'></i>  $value</span>";
+
+});

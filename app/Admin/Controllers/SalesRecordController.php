@@ -4,6 +4,8 @@ namespace App\Admin\Controllers;
 
 use App\Model\SalesRecord;
 use App\Model\Stock;
+use App\Model\Client;
+use App\Model\Staff;
 
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -90,6 +92,13 @@ class SalesRecordController extends Controller
                     "<i class='fa fa-check' style='color:green'></i>" :
                     "<i class='fa fa-close' style='color:red'></i>";
             });
+            $grid->client()->name('客户名');
+            $grid->staff()->name('导购员');
+            $grid->motor_serial_number('电机号');
+            $grid->frame_number('车架号');
+            $grid->bettery_type('电池型号');
+            $grid->remarks('备注')->editable();
+
             $grid->updated_at('订单日期');
             $grid->filter(function($filter){
                 $filter->useModal();
@@ -98,7 +107,7 @@ class SalesRecordController extends Controller
                 $filter->is('id', '订单号');
                 $filter->between('updated_at', '创建时间')->datetime();
             });
-            $grid->model()->orderBy('created_at','desc'); 
+            $grid->model()->orderBy('created_at','desc');
             $grid->disableRowSelector();
             $grid->disableBatchDeletion();
             $grid->actions(function ($actions) {
@@ -120,16 +129,27 @@ class SalesRecordController extends Controller
           // dd($collect);
             $form->hidden('id');
             $form->select('stock_id','车辆型号规格')->options(
-              Stock::all()->mapWithKeys(function ($item) {
-                return [$item['id'] => $item['name'].' 规格:'.$item['type'].' 材质:'.$item['material'].' 目前零售价:'.$item['price']];
-            })
-              )->ajax('/admin/api/stock');
+                Stock::all()->mapWithKeys(function ($item) {
+                    return [$item['id'] => $item['name'].' 规格:'.$item['type'].' 材质:'.$item['material'].' 目前零售价:'.$item['price']];
+            }))->ajax('/admin/api/stock');
             $form->currency('price', '销售金额')->symbol('￥');
+            $form->select('client_id','客户')->options(
+                Client::all()->mapWithKeys(function ($item) {
+                    return [$item['id'] => $item['name'].' 手机尾号: '.substr($item['phone'],-4)];
+            }))->ajax('/admin/api/client');
+            $form->select('staff_id','导购员')->options(
+                Staff::all()->mapWithKeys(function ($item) {
+                  return [$item['id'] => $item['name']];
+                })
+            );
             $states = [
                 'on'  => ['value' => 1, 'text' => '生效', 'color' => 'success'],
                 'off' => ['value' => 0, 'text' => '作废', 'color' => 'danger'],
             ];
             $form->switch('ispay', '订单生效')->states($states)->default(1);
+            $form->text('motor_serial_number', '电机号');
+            $form->text('frame_number', '车架号');
+            $form->text('bettery_type', '电池型号');
             $form->textarea('remarks','订单备注')->rows(3);
             // $form->display('created_at', 'Created At');
             $form->display('updated_at', '订单日期');
