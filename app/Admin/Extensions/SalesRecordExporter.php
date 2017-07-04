@@ -13,7 +13,6 @@ class SalesRecordExporter extends AbstractExporter
         //dd($data);
         echo '<pre>';
         //var_dump($data);
-        die(0);
         $index = 0;//序号
         foreach ($data as $row) {
             $row = ['index'=> $index++]+ $row['stock']['name']+ $row['stock']['type']+ $row['client']['name']
@@ -22,7 +21,8 @@ class SalesRecordExporter extends AbstractExporter
             $cellData[] = $row;
         }
         // 导出文件，
-        // var_dump($cellData);
+        var_dump($cellData);
+        die(0);
     		Excel::create($filename,function($excel) use ($cellData){
       			$excel->sheet('score', function($sheet) use ($cellData){
                 //设置格式
