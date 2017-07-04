@@ -12,12 +12,13 @@ class SalesRecordExporter extends AbstractExporter
         // 这里获取数据
         //dd($data);
         echo '<pre>';
-         var_dump($data);
+        //var_dump($data);
         die(0);
-        $titles = ['name','type','image','price','inventory'];
         $index = 0;//序号
         foreach ($data as $row) {
-            $row = ['index'=> $index++]+array_only($row, $titles);//筛选需要的列并且加上序号
+            $row = ['index'=> $index++]+ $row['stock']['name']+ $row['stock']['type']+ $row['client']['name']
+                + $row['client']['phone']+ $row['motor_serial_number'] +$row['frame_number']+ $row['bettery_type']
+                + $row['remarks'] +$row['created_at'];//筛选需要的列并且加上序号
             $cellData[] = $row;
         }
         // 导出文件，
@@ -39,7 +40,7 @@ class SalesRecordExporter extends AbstractExporter
                     'F' => 5,
                 ]);;
                 //首行标题
-                $sheet->mergeCells('A1:F1')->cell('A1:F1', function($cell) {
+                $sheet->mergeCells('A1:J1')->cell('A1:J1', function($cell) {
                   $cell->setFontSize(20);
                   $cell->setAlignment('center');
                 })->row(1, ["丰舆车业零售表 日期:".date('Y-m',time())]);;
