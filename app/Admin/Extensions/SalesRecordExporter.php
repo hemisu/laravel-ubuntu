@@ -25,7 +25,6 @@ class SalesRecordExporter extends AbstractExporter
                     'frame_number' => $row['frame_number'],
                     'remarks' => $row['remarks'],
                     'created_at' => date('Y-m-d',time($row['created_at'])),
-                    'staff' => substr("$row['staff']['name']",0,1),
                    ];
         }
         // 导出文件，
@@ -49,19 +48,19 @@ class SalesRecordExporter extends AbstractExporter
                     'G' => 12,
                     'H' => 12,
                     'I' => 12,
-                    'J' => 4,
+                    
                 ]);;
                 //首行标题
-                $sheet->mergeCells('A1:J1')->cell('A1:J1', function($cell) {
+                $sheet->mergeCells('A1:I1')->cell('A1:I1', function($cell) {
                   $cell->setFontSize(20);
                   $cell->setAlignment('center');
                 })->row(1, ["丰舆车业零售表 日期:".date('Y-m-d',time())]);;
-                $sheet->appendRow(2, ['序号','车辆名称','电池','客户名','联系方式','电机号','车架号','备注','购买日期','导购']);
+                $sheet->appendRow(2, ['序号','车辆名称','电池','客户名','联系方式','电机号','车架号','备注','购买日期']);
                 //填充数据
       			    $sheet->rows($cellData);
                 //绘制边界
                 $rownumber = count($cellData)+2;
-                $sheet->setBorder("A1:J".$rownumber, 'thin');
+                $sheet->setBorder("A1:I".$rownumber, 'thin');
       			});
     		})
          ->export('xls');
