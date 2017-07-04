@@ -25,7 +25,7 @@ class SalesRecordExporter extends AbstractExporter
                     'frame_number' => $row['frame_number'],
                     'remarks' => $row['remarks'],
                     'created_at' => date('Y-m-d',time($row['created_at'])),
-                    'staff' => $row['staff']['name'],
+                    'staff' => substr($row['staff']['name'],1),
                    ];
         }
         // 导出文件，
@@ -49,7 +49,7 @@ class SalesRecordExporter extends AbstractExporter
                     'G' => 12,
                     'H' => 12,
                     'I' => 12,
-                    'J' => 2,
+                    'J' => 4,
                 ]);;
                 //首行标题
                 $sheet->mergeCells('A1:J1')->cell('A1:J1', function($cell) {
