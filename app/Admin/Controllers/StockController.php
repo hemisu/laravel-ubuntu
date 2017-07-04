@@ -99,7 +99,7 @@ class StockController extends Controller
             $grid->price('零售价')->sortable()->editable();
 
             // $grid->created_at();
-            $grid->updated_at('更新时间');
+            $grid->updated_at('更新时间')->sortable();
             $grid->filter(function($filter){
                 // 禁用id查询框
                 $filter->disableIdFilter();
