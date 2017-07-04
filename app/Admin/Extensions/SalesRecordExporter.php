@@ -11,7 +11,7 @@ class SalesRecordExporter extends AbstractExporter
         $data = $this->getData();
         // 这里获取数据
         //dd($data);
-        echo '<pre>';
+        //echo '<pre>';
         //var_dump($data);
         $index = 0;//序号
         foreach ($data as $row) {
