@@ -70,16 +70,16 @@ class HomeController extends Controller
                                 ['日营销额', array_slice($daysales,-7), '#00a65a'],
                             ]
                         );
+                $monthsalesbar = new Bar(
+                            $time,
+                            [
+                                ['日订单数', $daysalesAmount, '#629819'],
+                            ]
+                        );
                 $row->column(6,(new Box('日订单数', $daysalesbar))->style('danger')->solid());
                 $row->column(6,(new Box('日营销额', $daysalesAmountbar))->style('success')->solid());
+                $row->column(12,(new Box('月营销额', $daysalesAmountbar))->style('success')->solid());
             });
-            $monthsalesbar = new Bar(
-                        $time,
-                        [
-                            ['日订单数', $daysales, '#300000'],
-                        ]
-                    );
-            $content->row(new Box('月营销量', $monthsalesbar));
             //
             // $content->row(function (Row $row) {
             //
