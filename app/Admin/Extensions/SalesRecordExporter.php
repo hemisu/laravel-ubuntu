@@ -25,7 +25,7 @@ class SalesRecordExporter extends AbstractExporter
                     'frame_number' => $row['frame_number'],
                     'remarks' => $row['remarks'],
                     'created_at' => date('Y-m-d',time($row['created_at'])),
-                    'staff' => substr($row['staff']['name'],0,1),
+                    'staff' => substr("$row['staff']['name']",0,1),
                    ];
         }
         // 导出文件，
