@@ -15,8 +15,8 @@ class SalesRecordExporter extends AbstractExporter
         //var_dump($data);
         $index = 0;//序号
         foreach ($data as $row) {
-            var_dump($row);
-            $row = ['index' => $index++, 
+            //var_dump($row);
+            $cellData[] = ['index' => $index++, 
                     'stock' => $row['stock']['name'], 
                     'type' => $row['stock']['type'],
                     'clientname' => $row['client']['name'], 
@@ -27,8 +27,6 @@ class SalesRecordExporter extends AbstractExporter
                     'remarks' => $row['remarks'],
                     'created_at' => $row['created_at'],
                    ];
-                //筛选需要的列并且加上序号
-            $cellData[] = $row;
         }
         // 导出文件，
         //var_dump($cellData);
