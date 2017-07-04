@@ -78,7 +78,7 @@ class HomeController extends Controller
                         );
                 $row->column(6,(new Box('日订单数', $daysalesbar))->style('danger')->solid());
                 $row->column(6,(new Box('日营销额', $daysalesAmountbar))->style('success')->solid());
-                $row->column(12,(new Box('月营销额', $daysalesAmountbar))->style('success')->solid());
+                $row->column(12,(new Box('月营销额', $monthsalesbar))->style('success')->solid());
             });
             //
             // $content->row(function (Row $row) {
