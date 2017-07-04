@@ -24,7 +24,7 @@ class SalesRecordExporter extends AbstractExporter
                     'motor_serial_number' => $row['motor_serial_number'],
                     'frame_number' => $row['frame_number'],
                     'remarks' => $row['remarks'],
-                    'created_at' => date('Y-m-d',time($row['created_at'])),
+                    'created_at' => date('Y-m-d',time($row['created_at']))
                    ];
         }
         // 导出文件，
