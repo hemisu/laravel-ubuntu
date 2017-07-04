@@ -18,6 +18,8 @@ use Illuminate\Support\MessageBag;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 
+use App\Admin\Extensions\SalesRecordExporter;
+
 class SalesRecordController extends Controller
 {
     use ModelForm;
@@ -115,6 +117,7 @@ class SalesRecordController extends Controller
               $actions->disableDelete();
               // $actions->disableEdit();
             });
+            $grid->exporter(new SalesRecordExporter());
         });
     }
 
