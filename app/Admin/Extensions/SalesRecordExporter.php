@@ -10,8 +10,9 @@ class SalesRecordExporter extends AbstractExporter
         $filename = '零售表 '.date('Y-m',time());
         $data = $this->getData();
         // 这里获取数据
-        dd($data);
-        // var_dump($data);
+        //dd($data);
+         var_dump($data);
+        die(0);
         $titles = ['name','type','image','price','inventory'];
         $index = 0;//序号
         foreach ($data as $row) {
