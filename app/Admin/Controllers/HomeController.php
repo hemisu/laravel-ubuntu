@@ -41,39 +41,37 @@ class HomeController extends Controller
                   $amountCostInventory += $v->price * $v->inventory;
                 }
                 $row->column(3, new InfoBox('库存金额', 'dollar', 'aqua', '/admin/stock', $amountCostInventory.'元'));
-                $row->column(3, new InfoBox('月订单数', 'shopping-cart', 'yellow', '/admin/users', SalesRecord::whereMonth('created_at', date('m',time()))->count().'单'));
-                $row->column(3, new InfoBox('日订单数', 'shopping-cart', 'red', '/admin/salerecord', SalesRecord::whereDate('created_at', date('Y-m-d',time()))->count().'单'));
-                $row->column(3, new InfoBox('日营销额', 'shopping-cart', 'green', '/admin/salerecord', SalesRecord::whereDate('created_at', date('Y-m-d',time()))->pluck('price')->sum().'元'));
+                $row->column(3, new InfoBox('月订单数', 'shopping-cart', 'yellow', '/admin/salerecord?per_page=50', SalesRecord::whereMonth('created_at', date('m',time()))->count().'单'));
+                $row->column(3, new InfoBox('日订单数', 'shopping-cart', 'red', '/admin/salerecord?per_page=50', SalesRecord::whereDate('created_at', date('Y-m-d',time()))->count().'单'));
+                $row->column(3, new InfoBox('日营销额', 'shopping-cart', 'green', '/admin/salerecord?per_page=50', SalesRecord::whereDate('created_at', date('Y-m-d',time()))->pluck('price')->sum().'元'));
                 // $row->column(3, new InfoBox('Articles', 'book', 'yellow', '/admin/articles', '2786'));
                 // $row->column(3, new InfoBox('Documents', 'file', 'red', '/admin/files', '698726'));
             });
             $content->row(function (Row $row) {
                 //最近7天统计表
-                $dt = Carbon::now()->subDay(6);
-                for ($i = 0; $i < 7; $i++) {
-                 $time[] = $dt->format('Y-m-d');
-                 $dt->addDay();
+                $dt = Carbon::now()->subDay(29);
+                for ($i = 0; $i < 30; $i++) {
+                  $time[] = $dt->format('Y-m-d');
+                  $dt->addDay();
                 }
-                $daysales = [];
                 foreach ($time as $value) {
                   $daysales[] = SalesRecord::whereDate('created_at', $value)->pluck('price')->sum();
                   $daysalesAmount[] = SalesRecord::whereDate('created_at', $value)->count();
                 }
                 $daysalesbar = new Bar(
-                            $time,
+                            array_slice($time,-7),
                             [
-                                ['日订单数', $daysalesAmount, '#dd4b39'],
+                                ['日订单数', array_slice($daysalesAmount,-7), '#dd4b39'],
                             ]
                         );
                 $daysalesAmountbar = new Bar(
-                            $time,
+                            array_slice($time,-7),
                             [
-                                ['日营销额', $daysales, '#00a65a'],
+                                ['日营销额', array_slice($daysales,-7), '#00a65a'],
                             ]
                         );
                 $row->column(6,(new Box('日订单数', $daysalesbar))->style('danger')->solid());
                 $row->column(6,(new Box('日营销额', $daysalesAmountbar))->style('success')->solid());
-
             });
             //
             // $content->row(function (Row $row) {
