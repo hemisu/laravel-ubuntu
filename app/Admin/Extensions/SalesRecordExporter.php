@@ -3,7 +3,7 @@ namespace App\Admin\Extensions;
 use Illuminate\Support\Arr;
 use Encore\Admin\Grid\Exporters\AbstractExporter;
 use Excel;
-class StockExporter extends AbstractExporter
+class SalesRecordExporter extends AbstractExporter
 {
     public function export()
     {
