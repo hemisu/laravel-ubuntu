@@ -93,6 +93,7 @@ class SalesRecordController extends Controller
                     "<i class='fa fa-close' style='color:red'></i>";
             });
             $grid->client()->name('客户名');
+            $grid->client()->phone('联系方式');
             $grid->staff()->name('导购员');
             $grid->motor_serial_number('电机号');
             $grid->frame_number('车架号');
