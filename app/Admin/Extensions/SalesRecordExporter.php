@@ -11,6 +11,7 @@ class SalesRecordExporter extends AbstractExporter
         $data = $this->getData();
         // 这里获取数据
         //dd($data);
+        echo '<pre>';
          var_dump($data);
         die(0);
         $titles = ['name','type','image','price','inventory'];
