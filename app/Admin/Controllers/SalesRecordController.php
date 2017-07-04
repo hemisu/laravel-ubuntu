@@ -84,7 +84,6 @@ class SalesRecordController extends Controller
 
             $grid->id('订单号')->sortable();
             $grid->stock()->name('名称');
-            $grid->stock()->type('规格');
             $grid->price('售价')->display(function ($cost) {
                 return "<span class='label label-info'>$cost</span>";
             });
@@ -100,10 +99,10 @@ class SalesRecordController extends Controller
                 return mb_substr($staffname,0,1);
             });
             $grid->motor_serial_number('电机号')->value(function ($staffname){
-                return mb_substr($staffname,0,1);
+                return mb_substr($staffname,0,-4);
             });
             $grid->frame_number('车架号')->value(function ($staffname){
-                return mb_substr($staffname,0,1);
+                return mb_substr($staffname,0,-4);
             });
             $grid->bettery_type('电池型号');
             $grid->remarks('备注')->editable();
