@@ -29,7 +29,7 @@ class SalesRecordExporter extends AbstractExporter
                    ];
         }
         // 导出文件，
-        //var_dump($cellData);
+        var_dump($cellData);
         die(0);
     		Excel::create($filename,function($excel) use ($cellData){
       			$excel->sheet('score', function($sheet) use ($cellData){
