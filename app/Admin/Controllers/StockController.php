@@ -92,11 +92,11 @@ class StockController extends Controller
                   return "<span class='label label-primary'>$inventory</span>";
                 }
 
-            });
+            })->sortable();
             $grid->cost('进价')->display(function ($cost) {
                 return "<span class='label label-info'>$cost</span>";
-            });
-            $grid->price('零售价')->editable();
+            })->sortable();
+            $grid->price('零售价')->sortable()->editable();
 
             // $grid->created_at();
             $grid->updated_at('更新时间');
