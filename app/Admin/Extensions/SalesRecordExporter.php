@@ -7,7 +7,7 @@ class SalesRecordExporter extends AbstractExporter
 {
     public function export()
     {
-        $filename = '零售表 '.date('Y-m',time());
+        $filename = '零售表 '.date('Y-m-d',time());
         $data = $this->getData();
         // 这里获取数据
         //dd($data);
@@ -18,14 +18,13 @@ class SalesRecordExporter extends AbstractExporter
             //var_dump($row);
             $cellData[] = ['index' => $index++, 
                     'stock' => $row['stock']['name'], 
-                    'type' => $row['stock']['type'],
+                    'bettery_type' => $row['bettery_type'],
                     'clientname' => $row['client']['name'], 
                     'clientphone' => $row['client']['phone'],
                     'motor_serial_number' => $row['motor_serial_number'],
                     'frame_number' => $row['frame_number'],
-                    'bettery_type' => $row['bettery_type'],
                     'remarks' => $row['remarks'],
-                    'created_at' => $row['created_at'],
+                    'created_at' => date('Y-m-d',time($row['created_at'])),
                    ];
         }
         // 导出文件，
@@ -42,22 +41,26 @@ class SalesRecordExporter extends AbstractExporter
                 ])->setWidth([
                     'A' => 6,
                     'B' => 25,
-                    'C' => 20,
-                    'D' => 15,
+                    'C' => 10,
+                    'D' => 10,
                     'E' => 12,
-                    'F' => 5,
+                    'F' => 10,
+                    'G' => 10,
+                    'H' => 6,
+                    'I' => 15,
+                    'J' => 10,
                 ]);;
                 //首行标题
                 $sheet->mergeCells('A1:J1')->cell('A1:J1', function($cell) {
                   $cell->setFontSize(20);
                   $cell->setAlignment('center');
-                })->row(1, ["丰舆车业零售表 日期:".date('Y-m',time())]);;
-                $sheet->appendRow(2, ['序号','车辆名称','规格型号','客户名','联系方式','电机号','车架号','电池','备注','购买日期']);
+                })->row(1, ["丰舆车业零售表 日期:".date('Y-m-d',time())]);;
+                $sheet->appendRow(2, ['序号','车辆名称','电池','客户名','联系方式','电机号','车架号','备注','购买日期']);
                 //填充数据
       			    $sheet->rows($cellData);
                 //绘制边界
                 $rownumber = count($cellData)+2;
-                $sheet->setBorder("A1:F".$rownumber, 'thin');
+                $sheet->setBorder("A1:J".$rownumber, 'thin');
       			});
     		})
          ->export('xls');
