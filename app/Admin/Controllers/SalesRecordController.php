@@ -111,11 +111,13 @@ class SalesRecordController extends Controller
                 $filter->between('updated_at', '创建时间')->datetime();
             });
             $grid->model()->orderBy('created_at','desc');
-            $grid->disableRowSelector();
             $grid->disableBatchDeletion();
             $grid->actions(function ($actions) {
               $actions->disableDelete();
               // $actions->disableEdit();
+            });
+            $grid->filter(function($filter){
+                $filter->between('updated_at', '更新时间')->datetime();
             });
             $grid->exporter(new SalesRecordExporter());
         });
