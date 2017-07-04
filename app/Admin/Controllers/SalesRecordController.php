@@ -104,20 +104,17 @@ class SalesRecordController extends Controller
 
             $grid->updated_at('订单日期');
             $grid->filter(function($filter){
-                $filter->useModal();
+                //$filter->useModal();
                 // 禁用id查询框
                 $filter->disableIdFilter();
                 $filter->is('id', '订单号');
-                $filter->between('updated_at', '创建时间')->datetime();
+                $filter->between('updated_at', '购买日期')->datetime();
             });
             $grid->model()->orderBy('created_at','desc');
             $grid->disableBatchDeletion();
             $grid->actions(function ($actions) {
               $actions->disableDelete();
               // $actions->disableEdit();
-            });
-            $grid->filter(function($filter){
-                $filter->between('updated_at', '更新时间')->datetime();
             });
             $grid->exporter(new SalesRecordExporter());
         });
