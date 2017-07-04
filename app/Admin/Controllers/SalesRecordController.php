@@ -96,7 +96,9 @@ class SalesRecordController extends Controller
             });
             $grid->client()->name('客户名');
             $grid->client()->phone('联系方式');
-            $grid->staff()->name('导购员');
+            $grid->staff()->name('导购员')->value(function ($staffname){
+                return substr($staffname,0,1);
+            });
             $grid->motor_serial_number('电机号');
             $grid->frame_number('车架号');
             $grid->bettery_type('电池型号');
