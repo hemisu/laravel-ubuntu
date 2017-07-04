@@ -17,7 +17,7 @@ class SalesRecordExporter extends AbstractExporter
         foreach ($data as $row) {
             $row = ['index' => $index++, 
                     'stock' => $row['stock']['name'], 
-                    'type' = $row['stock']['type'],
+                    'type' => $row['stock']['type'],
                     'clientname' => $row['client']['name'], 
                     'clientphone' => $row['client']['phone'],
                     'motor_serial_number' => $row['motor_serial_number'],
