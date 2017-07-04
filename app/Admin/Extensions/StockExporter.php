@@ -17,7 +17,7 @@ class StockExporter extends AbstractExporter
 
         // dd($data);
         // var_dump($data);
-        $titles = ['name','type','image','price','inventory'];
+        $titles = ['name','type','material','price','inventory'];
         $index = 0;//序号
         foreach ($data as $row) {
             $row = ['index'=> $index++]+array_only($row, $titles);//筛选需要的列并且加上序号
