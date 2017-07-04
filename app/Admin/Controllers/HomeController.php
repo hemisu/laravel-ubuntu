@@ -73,6 +73,13 @@ class HomeController extends Controller
                 $row->column(6,(new Box('日订单数', $daysalesbar))->style('danger')->solid());
                 $row->column(6,(new Box('日营销额', $daysalesAmountbar))->style('success')->solid());
             });
+            $monthsalesbar = new Bar(
+                        $time,
+                        [
+                            ['日订单数', $daysales, '#300000'],
+                        ]
+                    );
+            $content->row(new Box('月营销量', $monthsalesbar));
             //
             // $content->row(function (Row $row) {
             //
