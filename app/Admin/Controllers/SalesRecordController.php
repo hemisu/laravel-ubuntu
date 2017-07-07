@@ -141,11 +141,11 @@ class SalesRecordController extends Controller
                     return [$item['id'] => $item['name'].' 规格:'.$item['type'].' 材质:'.$item['material'].' 目前零售价:'.$item['price']];
             }))->ajax('/admin/api/stock');
             $form->currency('price', '销售金额')->symbol('￥');
-            $form->select('client_id','客户')->options(
+            $form->select('client_id','客户姓名')->options(
                 Client::all()->mapWithKeys(function ($item) {
                     return [$item['id'] => $item['name'].' 手机尾号: '.substr($item['phone'],-4)];
-            }))->placeholder('选择客户')->ajax('/admin/api/client');
-            $form->select('staff_id','导购员')->placeholder('选择导购员')->options(
+            }))->ajax('/admin/api/client');
+            $form->select('staff_id','导购员')->options(
                 Staff::all()->mapWithKeys(function ($item) {
                   return [$item['id'] => $item['name']];
                 })
