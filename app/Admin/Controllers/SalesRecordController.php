@@ -144,9 +144,8 @@ class SalesRecordController extends Controller
             $form->select('client_id','客户')->options(
                 Client::all()->mapWithKeys(function ($item) {
                     return [$item['id'] => $item['name'].' 手机尾号: '.substr($item['phone'],-4)];
-            }))->default(' ');
-            //->ajax('/admin/api/client');
-            $form->select('staff_id','导购员')->options(
+            }))->placeholder('选择客户')->ajax('/admin/api/client');
+            $form->select('staff_id','导购员')->placeholder('选择导购员')->options(
                 Staff::all()->mapWithKeys(function ($item) {
                   return [$item['id'] => $item['name']];
                 })
