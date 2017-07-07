@@ -99,10 +99,10 @@ class SalesRecordController extends Controller
                 return mb_substr($staffname,0,1);
             });
             $grid->motor_serial_number('电机号')->value(function ($staffname){
-                return mb_substr($staffname,0,-4);
+                return mb_substr($staffname,-4);
             });
             $grid->frame_number('车架号')->value(function ($staffname){
-                return mb_substr($staffname,0,-4);
+                return mb_substr($staffname,-4);
             });
             $grid->bettery_type('电池型号');
             $grid->remarks('备注')->editable();
