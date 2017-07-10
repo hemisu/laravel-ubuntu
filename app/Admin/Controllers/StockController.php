@@ -113,7 +113,7 @@ class StockController extends Controller
             $grid->disableBatchDeletion();
             $grid->disableRowSelector();
             $grid->actions(function ($actions) {
-              // $actions->disableDelete();
+              $actions->disableDelete();
               // $actions->disableEdit();
             });
         });

@@ -134,7 +134,7 @@ class SalesRecordController extends Controller
             $grid->model()->orderBy('created_at','desc');
             $grid->disableBatchDeletion();
             $grid->actions(function ($actions) {
-            //   $actions->disableDelete();
+              $actions->disableDelete();
               // $actions->disableEdit();
             });
             $grid->disableRowSelector();
