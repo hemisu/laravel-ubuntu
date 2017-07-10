@@ -9,6 +9,8 @@ use App\Model\Staff;
 
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
+use Encore\Admin\Layout\Row;
+use Encore\Admin\Widgets\Box;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
@@ -67,7 +69,7 @@ class SalesRecordController extends Controller
         return Admin::content(function (Content $content) {
 
             $content->header('零售订单');
-            $content->description('创建');
+            $content->description('创建订单');
 
             $content->body($this->form());
         });
@@ -93,7 +95,10 @@ class SalesRecordController extends Controller
                     "<i class='fa fa-check' style='color:green'></i>" :
                     "<i class='fa fa-close' style='color:red'></i>";
             });
-            $grid->client()->name('客户名');
+            $grid->client()->name('客户名')->display(function ($v){
+                return $v?'<a href="'.url('admin/client/'.$this->client['id'].'/salesrecord').'">'
+                .$this->client['name'].'</a>':"";
+            });
             $grid->client()->phone('联系方式');
             $grid->staff()->name('导购员')->value(function ($staffname){
                 return mb_substr($staffname,0,1);
@@ -142,13 +147,13 @@ class SalesRecordController extends Controller
             }))->ajax('/admin/api/stock');
             $form->currency('price', '销售金额')->symbol('￥');
             $form->select('client_id','客户姓名')->options(
-                Client::all()->mapWithKeys(function ($item) {
-                    return [$item['id'] => $item['name'].' 手机尾号: '.substr($item['phone'],-4)];
+              Client::all()->mapWithKeys(function ($item) {
+                return [$item['id'] => $item['name'].' 手机尾号: '.substr($item['phone'],-4)];
             }))->ajax('/admin/api/client');
             $form->select('staff_id','导购员')->options(
-                Staff::all()->mapWithKeys(function ($item) {
-                  return [$item['id'] => $item['name']];
-                })
+              Staff::all()->mapWithKeys(function ($item) {
+                return [$item['id'] => $item['name']];
+              })
             );
             $states = [
                 'on'  => ['value' => 1, 'text' => '生效', 'color' => 'success'],
@@ -182,6 +187,30 @@ class SalesRecordController extends Controller
                 // // echo $request->url();
 
             });
+        });
+    }
+    /**
+     * Make a form builder.
+     *
+     * @return Form
+     */
+    protected function clientForm()
+    {
+        return Admin::form(Client::class, function (Form $form) {
+
+            $form->display('id', 'ID');
+            $form->text('name', '姓名')->rules('required|min:2');//姓名
+            $states = [
+                '男'  => ['value' => 1, 'text' => '男', 'color' => 'success'],
+                '女' => ['value' => 2, 'text' => '女', 'color' => 'danger'],
+            ];
+            $form->radio('sex', '性别')->options(['1'=> '男','2' => '女'])->default('1');
+            $form->mobile('phone', '手机');
+            $form->date('birth', '生日');
+            $form->text('address', '地址');
+
+            $form->display('created_at', 'Created At');
+            $form->display('updated_at', 'Updated At');
         });
     }
     /**

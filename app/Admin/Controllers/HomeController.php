@@ -76,8 +76,16 @@ class HomeController extends Controller
                                 ['日订单数', $daysalesAmount, '#629819'],
                             ]
                         );
-                $row->column(6,(new Box('日订单数', $daysalesbar))->style('danger')->solid());
-                $row->column(6,(new Box('日营销额', $daysalesAmountbar))->style('success')->solid());
+                $updatelist = <<<EOT
+                    <ul>
+                        <li>2017-07-10 更新：零售订单页面点击顾客姓名可以查看顾客的所有订单信息</li>
+                    </ul>
+EOT;
+
+                $row->column(4,(new Box('更新日志', $updatelist))->style('primary')->solid());
+                $row->column(4,(new Box('日订单数', $daysalesbar))->style('danger')->solid());
+                $row->column(4,(new Box('日营销额', $daysalesAmountbar))->style('success')->solid());
+
                 $row->column(12,(new Box('月营销额', $monthsalesbar))->style('success')->solid());
             });
             //

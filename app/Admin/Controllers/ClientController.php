@@ -3,11 +3,16 @@
 namespace App\Admin\Controllers;
 
 use App\Model\Client;
+use App\Model\SalesRecord;
+use App\Model\Stock;
 
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
+use Encore\Admin\Layout\Row;
+use Encore\Admin\Widgets\Box;
+use Encore\Admin\Widgets\Table;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
 
@@ -77,7 +82,10 @@ class ClientController extends Controller
         return Admin::grid(Client::class, function (Grid $grid) {
 
             $grid->id('ID')->sortable();
-            $grid->name('姓名');
+            $grid->name('姓名')->display(function($v){
+                return $v?'<a href="'.url('admin/client/'.$this->id.'/salesrecord').'">'
+                .$v.'</a>':"";
+            });
             $grid->phone('手机')->prependIcon('phone');
             $grid->address('地址')->prependIcon('map-marker');
         });
@@ -110,11 +118,53 @@ class ClientController extends Controller
     /**
      * API
      */
-     public function apiClient(Request $request)
-     {
-         $q = $request->get('q');
+    public function apiClient(Request $request)
+    {
+     $q = $request->get('q');
 
-         return Client::where('name', 'like', "%$q%")
-         ->paginate(null, ['id',DB::raw("concat(name,' 手机号:',phone) as text")]);
-     }
+     return Client::where('name', 'like', "%$q%")
+     ->paginate(null, ['id',DB::raw("concat(name,' 手机号:',phone) as text")]);
+    }
+    /**
+     * clientSalesRecord interface.
+     *
+     * @return Content
+     */
+    public function clientSalesRecord($id){
+        return Admin::content(function (Content $content) use ($id){
+
+            $content->header('客户-订单');
+            $content->description('客户名下订单信息');
+
+            $content->row(function($row) use ($id){
+
+            });
+            $headers = ['客户名', '性别', '手机', '生日', '地址', '操作'
+            ];
+            $clientInfo = Client::findOrFail($id)->first();
+            $rows = [
+                [$clientInfo->name, $clientInfo->sex, $clientInfo->phone, $clientInfo->birth, $clientInfo->address,
+            '<a href="'.url('admin/client/'.$clientInfo->id.'/edit').'"><i class="fa fa-edit"></i>修改客户资料</a>',],
+            ];
+            $content->row((new Box('客户信息', new Table($headers, $rows)))->style('primary')->solid());
+            $stockRecordInfos = SalesRecord::where('client_id',$id)->get();
+            foreach($stockRecordInfos as $stockRecordinfo){
+                // echo $stockRecordinfo->stock_id;
+                $stock = SalesRecord::find($stockRecordinfo->stock_id)->stock;
+                $stockrows[] = [
+                    $stockRecordinfo->id,
+                    $stock->name,
+                    $stockRecordinfo->price,
+                    $stockRecordinfo->motor_serial_number,
+                    $stockRecordinfo->frame_number,
+                    $stockRecordinfo->bettery_type,
+                    $stockRecordinfo->remarks,
+                    '<a href="'.url('admin/salerecord/'.$stockRecordinfo->id.'/edit').'"><i class="fa fa-edit"></i>修改订单</a>',
+                ];
+            }
+            // dd($stockInfos);
+            $stockRecordHeaders = ['订单号', '名称', '售价', '电机号', '车架号', '电池型号', '备注', '操作'];
+            $content->row((new Box('订单信息', new Table($stockRecordHeaders, $stockrows)))->style('primary')->solid());
+        });
+    }
 }
