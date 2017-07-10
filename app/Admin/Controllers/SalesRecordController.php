@@ -85,7 +85,7 @@ class SalesRecordController extends Controller
         return Admin::grid(SalesRecord::class, function (Grid $grid) {
 
             $grid->id('订单号')->sortable();
-            $grid->stock()->name('名称');
+            $grid->stock()->name('名称')->limit(10);
             $grid->price('售价')->display(function ($cost) {
                 return "<span class='label label-info'>$cost</span>";
             });
@@ -112,7 +112,9 @@ class SalesRecordController extends Controller
             $grid->bettery_type('电池型号');
             $grid->remarks('备注')->editable();
 
-            $grid->updated_at('订单日期');
+            $grid->updated_at('订单日期')->display(function($t){
+                return date('Y-m-d', time($t));
+            });
             $grid->filter(function($filter){
                 //$filter->useModal();
                 // 禁用id查询框
@@ -126,6 +128,7 @@ class SalesRecordController extends Controller
               $actions->disableDelete();
               // $actions->disableEdit();
             });
+            $grid->disableRowSelector();
             $grid->exporter(new SalesRecordExporter());
         });
     }
