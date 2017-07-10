@@ -141,7 +141,8 @@ class ClientController extends Controller
             });
             $headers = ['客户名', '性别', '手机', '生日', '地址', '操作'
             ];
-            $clientInfo = Client::findOrFail($id)->first();
+
+            $clientInfo = Client::where('id', '=', $id)->first();
             $rows = [
                 [$clientInfo->name, $clientInfo->sex, $clientInfo->phone, $clientInfo->birth, $clientInfo->address,
             '<a href="'.url('admin/client/'.$clientInfo->id.'/edit').'"><i class="fa fa-edit"></i>修改客户资料</a>',],
