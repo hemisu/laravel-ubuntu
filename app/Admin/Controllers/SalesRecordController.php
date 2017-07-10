@@ -119,13 +119,22 @@ class SalesRecordController extends Controller
                 //$filter->useModal();
                 // 禁用id查询框
                 $filter->disableIdFilter();
+                $filter->where(function ($query) {
+
+                    $input = $this->input;
+
+                    $query->whereHas('Stock', function ($query) use ($input) {
+                        $query->where('name', 'like', "%{$input}%");
+                    });
+
+                }, '车名称');
                 $filter->is('id', '订单号');
                 $filter->between('updated_at', '购买日期')->datetime();
             });
             $grid->model()->orderBy('created_at','desc');
             $grid->disableBatchDeletion();
             $grid->actions(function ($actions) {
-              $actions->disableDelete();
+            //   $actions->disableDelete();
               // $actions->disableEdit();
             });
             $grid->disableRowSelector();
