@@ -78,17 +78,23 @@ class HomeController extends Controller
                         );
                 $updatelist = <<<EOT
                     <ul>
-                        <li>2017-07-10 更新：
-                            <ul>
-                                <li>
-                                    零售订单页面点击顾客姓名可以查看顾客的所有订单信息
-                                </li>
-                                <li>
-                                    优化了零售订单页面的显示
-                                </li>
-                            </ul>
-                        </li>
-
+                      <li>2017-07-16 更新：
+                        <ul>
+                          <li>
+                              修复了重新编辑对库存改变的bug
+                          </li>
+                        </ul>
+                      </li>
+                      <li>2017-07-10 更新：
+                        <ul>
+                          <li>
+                              零售订单页面点击顾客姓名可以查看顾客的所有订单信息
+                          </li>
+                          <li>
+                              优化了零售订单页面的显示
+                          </li>
+                        </ul>
+                      </li>
                     </ul>
 EOT;
 

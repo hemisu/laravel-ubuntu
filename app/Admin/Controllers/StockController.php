@@ -106,7 +106,7 @@ class StockController extends Controller
                 $filter->where(function ($query) {
                     $query->where('name', 'like', "%{$this->input}%")
                         ->orWhere('type', 'like', "%{$this->input}%");
-                }, '名称或型号');
+                }, '车辆名称');
                 $filter->between('updated_at', '更新时间')->datetime();
             });
             $grid->exporter(new StockExporter());

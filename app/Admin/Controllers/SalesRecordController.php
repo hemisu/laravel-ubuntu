@@ -127,7 +127,7 @@ class SalesRecordController extends Controller
                         $query->where('name', 'like', "%{$input}%");
                     });
 
-                }, '车名称');
+                }, '车辆名称');
                 $filter->is('id', '订单号');
                 $filter->between('updated_at', '购买日期')->datetime();
             });
@@ -168,8 +168,8 @@ class SalesRecordController extends Controller
               })
             );
             $states = [
-                'on'  => ['value' => 1, 'text' => '生效', 'color' => 'success'],
-                'off' => ['value' => 0, 'text' => '作废', 'color' => 'danger'],
+                'on'  => ['value' => true, 'text' => '生效', 'color' => 'success'],
+                'off' => ['value' => false, 'text' => '作废', 'color' => 'danger'],
             ];
             $form->switch('ispay', '订单生效')->states($states)->default(1);
             $form->text('motor_serial_number', '电机号');
@@ -181,14 +181,16 @@ class SalesRecordController extends Controller
             // echo url()->current();
             //保存后进行验证
 
-            $form->saved(function ($form) {
+            $form->saving(function ($form) {
                 if($form->id) {//修改表格时
-                  $isChange = ($form->ispay = 'on')?true:false;
-                  $ispay = (SalesRecord::findOrFail($form->id)->toArray()['ispay'])?true:false;
-                  if($form->ispay == 'on' && $ispay == $isChange){//修改表格时订单支付状态改变
-                    DB::table('stocks')->where('id',$form->stock_id)->decrement('inventory',1);
-                  }else{//作废
-                    DB::table('stocks')->where('id',$form->stock_id)->increment('inventory',1);
+                  $isChange = ($form->ispay == 'on')?true:false;
+                  $ispay = (SalesRecord::where('id',$form->id)->first()->ispay == '1')?true:false;
+                  if($ispay != $isChange){//修改表格时订单支付状态改变
+                    if($isChange){
+                      DB::table('stocks')->where('id',$form->stock_id)->decrement('inventory',1);
+                    }else{
+                      DB::table('stocks')->where('id',$form->stock_id)->increment('inventory',1);
+                    }
                   }
                 }else{//创建表格时
                   if($form->ispay == 'on'){
