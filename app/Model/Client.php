@@ -8,6 +8,6 @@ class Client extends Model
 {
     public function salesrecord()
     {
-        return $this->hasMany('App\Model\SalesRecord');
+        return $this->hasMany(SalesRecord::class, 'client_id');
     }
 }

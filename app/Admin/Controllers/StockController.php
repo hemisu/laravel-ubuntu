@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\DB;
 use Encore\Admin\Widgets\Box;
 use App\Admin\Extensions\StockExporter;
 
+use Encore\Admin\Auth\Permission;
+
 
 class StockController extends Controller
 {
@@ -93,9 +95,11 @@ class StockController extends Controller
                 }
 
             })->sortable();
-            $grid->cost('进价')->display(function ($cost) {
-                return "<span class='label label-info'>$cost</span>";
-            })->sortable();
+            if(Admin::user()->isRole('adminoperator')){//仅后台操作员能看到进价
+              $grid->cost('进价')->display(function ($cost) {
+                  return "<span class='label label-info'>$cost</span>";
+              })->sortable();
+            }
             $grid->price('零售价')->sortable()->editable();
 
             // $grid->created_at();

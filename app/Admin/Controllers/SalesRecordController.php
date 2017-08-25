@@ -197,9 +197,6 @@ class SalesRecordController extends Controller
                     DB::table('stocks')->where('id',$form->stock_id)->decrement('inventory',1);
                   }
                 }
-                // // DB::table('stocks')->decrement('inventory',1);
-                // // echo $request->url();
-
             });
         });
     }

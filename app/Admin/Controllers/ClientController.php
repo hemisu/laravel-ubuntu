@@ -5,6 +5,7 @@ namespace App\Admin\Controllers;
 use App\Model\Client;
 use App\Model\SalesRecord;
 use App\Model\Stock;
+use App\Model\Staff;
 
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -18,6 +19,7 @@ use Encore\Admin\Controllers\ModelForm;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\MessageBag;
 
 class ClientController extends Controller
 {
@@ -88,6 +90,7 @@ class ClientController extends Controller
             });
             $grid->phone('手机')->prependIcon('phone');
             $grid->address('地址')->prependIcon('map-marker');
+            $grid->model()->orderBy('created_at','desc');
         });
     }
 
@@ -110,9 +113,48 @@ class ClientController extends Controller
             $form->mobile('phone', '手机');
             $form->date('birth', '生日');
             $form->text('address', '地址');
+            $form->hasMany('salesrecord', function (Form\NestedForm $form) {
+              $form->select('stock_id','车辆型号规格')->options(
+                  Stock::all()->mapWithKeys(function ($item) {
+                      return [$item['id'] => $item['name'].' 规格:'.$item['type'].' 材质:'.$item['material'].' 目前零售价:'.$item['price']];
+              }));
+              $form->currency('price', '销售金额')->symbol('￥');
+              $form->select('staff_id','导购员')->options(
+                Staff::all()->mapWithKeys(function ($item) {
+                  return [$item['id'] => $item['name']];
+                })
+              );
+              $states = [
+                  'on'  => ['value' => true, 'text' => '生效', 'color' => 'success'],
+                  'off' => ['value' => false, 'text' => '作废', 'color' => 'danger'],
+              ];
+              $form->switch('ispay', '订单生效')->states($states)->default(1);
+              $form->text('motor_serial_number', '电机号');
+              $form->text('frame_number', '车架号');
+              $form->text('bettery_type', '电池型号');
+              $form->textarea('remarks','订单备注')->rows(3);
+              $form->display('updated_at', '订单日期');
+            });
+            $form->saving(function ($form) {
 
-            $form->display('created_at', 'Created At');
-            $form->display('updated_at', 'Updated At');
+              foreach ($form->salesrecord as $sales) {
+                if(Stock::find($sales['stock_id'])->inventory <= 0){
+                  $error = new MessageBag([
+                      'title'   => '错误',
+                      'message' => Stock::find($sales['stock_id'])->name.'已售完',
+                  ]);
+                  return back()->with(compact('error'));
+                }
+              }
+              //减库存
+              foreach ($form->salesrecord as $sales) {
+                Stock::find($sales['stock_id'])->decrement('inventory',1);
+              }
+
+            });
+
+            $form->display('created_at', '创建时间');
+            $form->display('updated_at', '更新时间');
         });
     }
     /**

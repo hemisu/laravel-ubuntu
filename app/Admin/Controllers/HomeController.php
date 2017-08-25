@@ -76,33 +76,39 @@ class HomeController extends Controller
                                 ['日订单数', $daysalesAmount, '#629819'],
                             ]
                         );
-                $updatelist = <<<EOT
-                    <ul>
-                      <li>2017-07-16 更新：
-                        <ul>
-                          <li>
-                              修复了重新编辑对库存改变的bug
-                          </li>
-                        </ul>
-                      </li>
-                      <li>2017-07-10 更新：
-                        <ul>
-                          <li>
-                              零售订单页面点击顾客姓名可以查看顾客的所有订单信息
-                          </li>
-                          <li>
-                              优化了零售订单页面的显示
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
-EOT;
+//                 $updatelist = <<<EOT
+//                     <ul>
+//                       <li>2017-07-16 更新：
+//                         <ul>
+//                           <li>
+//                               修复了重新编辑对库存改变的bug
+//                           </li>
+//                         </ul>
+//                       </li>
+//                       <li>2017-07-10 更新：
+//                         <ul>
+//                           <li>
+//                               零售订单页面点击顾客姓名可以查看顾客的所有订单信息
+//                           </li>
+//                           <li>
+//                               优化了零售订单页面的显示
+//                           </li>
+//                         </ul>
+//                       </li>
+//                     </ul>
+// EOT;
+                $quickButton = '<a class="btn btn-default btn-block" href="'.admin_url('client/create').'">新客户购车</a>';
+                $quickButton .= '<a class="btn btn-default btn-block" href="'.admin_url('salerecord/create').'">老客户购车</a>';
 
-                $row->column(4,(new Box('更新日志', $updatelist))->style('primary')->solid());
-                $row->column(4,(new Box('日订单数', $daysalesbar))->style('danger')->solid());
-                $row->column(4,(new Box('日营销额', $daysalesAmountbar))->style('success')->solid());
+                $quickButton .= '<a class="btn btn-default btn-block" href="'.admin_url('client/create').'">进库存</a>';
+                $row->column(4,
+                (new Box('快捷菜单', $quickButton))->style('primary')
+                // (new Box('更新日志', $updatelist))->style('primary')
+                );
+                $row->column(4,(new Box('日订单数', $daysalesbar))->style('danger'));
+                $row->column(4,(new Box('日营销额', $daysalesAmountbar))->style('success'));
 
-                $row->column(12,(new Box('月营销额', $monthsalesbar))->style('success')->solid());
+                $row->column(12,(new Box('月营销额', $monthsalesbar))->style('success'));
             });
             //
             // $content->row(function (Row $row) {
