@@ -112,8 +112,8 @@ class SalesRecordController extends Controller
             $grid->bettery_type('电池型号');
             $grid->remarks('备注')->editable();
 
-            $grid->created_at('订单日期')->display(function($t){
-                return date('Y-m-d', time($t));
+            $grid->created_at('订单日期')->display(function ($create_at) {
+                return date('Y-m-d', strtotime($create_at));
             });
             $grid->filter(function($filter){
                 //$filter->useModal();
