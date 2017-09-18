@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
 
+use App\Admin\Extensions\ClientExporter;
+
 class ClientController extends Controller
 {
     use ModelForm;
@@ -91,6 +93,7 @@ class ClientController extends Controller
             $grid->phone('手机')->prependIcon('phone');
             $grid->address('地址')->prependIcon('map-marker');
             $grid->model()->orderBy('created_at','desc');
+            $grid->exporter(new ClientExporter());
         });
     }
 
