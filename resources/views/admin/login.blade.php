@@ -25,7 +25,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-     <img src="http://www.fycy.com/content/templates/fycy/images/logo.png" alt="" style="vertical-align:-30%;">
+     <img src="http://www.fycy.com/img/logo.png" alt="" style="vertical-align:-30%;">
     <a href="{{ Admin::url('/') }}"><b>{{config('admin.logintitle')}}</b> </a>
     <br/><span style="font-size:25px;">库存管理系统</span>
   </div>
