@@ -117,7 +117,7 @@ class ClientController extends Controller
                 '女' => ['value' => 2, 'text' => '女', 'color' => 'danger'],
             ];
             $form->radio('sex', '性别')->options(['1'=> '男','2' => '女'])->default('1');
-            $form->mobile('phone', '手机');
+            $form->text('phone', '手机');
             $form->date('birth', '生日');
             $form->text('address', '地址');
             $form->hasMany('salesrecord', function (Form\NestedForm $form) {
