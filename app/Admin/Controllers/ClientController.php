@@ -93,6 +93,10 @@ class ClientController extends Controller
             $grid->phone('手机')->prependIcon('phone');
             $grid->address('地址')->prependIcon('map-marker');
             $grid->model()->orderBy('created_at','desc');
+            $grid->filter(function($filter){
+                $filter->like('name', '姓名');
+                $filter->like('phone', '手机');
+            });
             $grid->exporter(new ClientExporter());
         });
     }
