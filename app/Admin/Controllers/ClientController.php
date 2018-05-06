@@ -92,9 +92,9 @@ class ClientController extends Controller
             });
             $grid->phone('手机')->prependIcon('phone');
             $grid->salesrecord()->display(function($arr) {
-                var $temp = ''
+                $temp = '';
                 foreach ($arr as $value){
-                    $temp += $value['stock_id']
+                    $temp += $value['stock_id'];
                 }
                 return $value;
             });
