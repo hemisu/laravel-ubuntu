@@ -96,7 +96,7 @@ class ClientController extends Controller
                 foreach ($arr as $value){
                     $temp .= $value['stock_id'];
                 }
-                return $value;
+                return $temp;
             });
             $grid->address('地址')->prependIcon('map-marker');
             $grid->model()->orderBy('created_at','desc');
