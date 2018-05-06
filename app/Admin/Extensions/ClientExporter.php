@@ -2,6 +2,8 @@
 
 namespace App\Admin\Extensions;
 
+use App\Model\Stock;
+
 use Illuminate\Support\Arr;
 use Encore\Admin\Grid\Exporters\AbstractExporter;
 use Excel;
@@ -22,11 +24,17 @@ class ClientExporter extends AbstractExporter
         foreach ($data as $row) {
             $row['sex'] = ($row['sex'] == 1)? '男' : '女';
             $row = ['index'=> $index++]+array_only($row, $titles);//筛选需要的列并且加上序号
+            $temp = '';
+            foreach ($row['salesrecord'] as $value){
+                $stock = Stock::find($value['stock_id'])->name;
+                $temp .= $stock.'<br />';
+            }
+            $row['salesrecord'] = $temp;
             $cellData[] = $row;
         }
 
         // 导出文件，
-        var_dump($data);
+        var_dump($cellData);
     	// 	Excel::create($filename,function($excel) use ($cellData){
       	// 		$excel->sheet('score', function($sheet) use ($cellData){
         //         //设置格式
