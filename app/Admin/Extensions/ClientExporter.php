@@ -17,7 +17,7 @@ class ClientExporter extends AbstractExporter
 
         // dd($data);
         // var_dump($data);
-        $titles = ['name','sex','phone','birth','address'];
+        $titles = ['name','sex','phone','birth','salesrecord','address'];
         $index = 0;//序号
         foreach ($data as $row) {
             $row['sex'] = ($row['sex'] == 1)? '男' : '女';
@@ -42,13 +42,14 @@ class ClientExporter extends AbstractExporter
                     'D' => 15,
                     'E' => 15,
                     'F' => 25,
+                    'G' => 25,
                 ]);;
                 //首行标题
                 $sheet->mergeCells('A1:F1')->cell('A1:F1', function($cell) {
                   $cell->setFontSize(20);
                   $cell->setAlignment('center');
               })->row(1, ["丰舆车业客户列表 日期:".date('Y-m',time())]);;
-                $sheet->appendRow(2, ['序号','姓名','性别','联系方式','生日','地址']);
+                $sheet->appendRow(2, ['序号','姓名','性别','联系方式','生日','购车','地址']);
                 //填充数据
       			    $sheet->rows($cellData);
                 //绘制边界
