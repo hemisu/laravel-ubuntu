@@ -27,7 +27,7 @@ class ClientExporter extends AbstractExporter
             $temp = '';
             foreach ($row['salesrecord'] as $value){
                 $stock = Stock::find($value['stock_id'])->name;
-                $temp .= $stock."\t";
+                $temp .= $stock."|";
             }
             $row['salesrecord'] = $temp;
             $cellData[] = $row;
