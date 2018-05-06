@@ -34,38 +34,38 @@ class ClientExporter extends AbstractExporter
         }
 
         // 导出文件，
-        var_dump($cellData);
-    	// 	Excel::create($filename,function($excel) use ($cellData){
-      	// 		$excel->sheet('score', function($sheet) use ($cellData){
-        //         //设置格式
-        //         $sheet->setStyle([
-        //             'font' => [
-        //                 'name' => 'SimSun',
-        //                 'size' => 12,
-        //             ]
-        //         ])->setWidth([
-        //             'A' => 6,
-        //             'B' => 25,
-        //             'C' => 6,
-        //             'D' => 15,
-        //             'E' => 15,
-        //             'F' => 25,
-        //             'G' => 25,
-        //         ]);;
-        //         //首行标题
-        //         $sheet->mergeCells('A1:F1')->cell('A1:F1', function($cell) {
-        //           $cell->setFontSize(20);
-        //           $cell->setAlignment('center');
-        //       })->row(1, ["丰舆车业客户列表 日期:".date('Y-m',time())]);;
-        //         $sheet->appendRow(2, ['序号','姓名','性别','联系方式','生日','购车','地址']);
-        //         //填充数据
-      	// 		    $sheet->rows($cellData);
-        //         //绘制边界
-        //         $rownumber = count($cellData)+2;
-        //         $sheet->setBorder("A1:F".$rownumber, 'thin');
-      	// 		});
-    	// 	})
-        //  ->export('xls');
+//         var_dump($cellData);
+    		Excel::create($filename,function($excel) use ($cellData){
+      			$excel->sheet('score', function($sheet) use ($cellData){
+                //设置格式
+                $sheet->setStyle([
+                    'font' => [
+                        'name' => 'SimSun',
+                        'size' => 12,
+                    ]
+                ])->setWidth([
+                    'A' => 6,
+                    'B' => 25,
+                    'C' => 6,
+                    'D' => 15,
+                    'E' => 15,
+                    'F' => 25,
+                    'G' => 25,
+                ]);;
+                //首行标题
+                $sheet->mergeCells('A1:F1')->cell('A1:F1', function($cell) {
+                  $cell->setFontSize(20);
+                  $cell->setAlignment('center');
+              })->row(1, ["丰舆车业客户列表 日期:".date('Y-m',time())]);;
+                $sheet->appendRow(2, ['序号','姓名','性别','联系方式','生日','购车','地址']);
+                //填充数据
+      			    $sheet->rows($cellData);
+                //绘制边界
+                $rownumber = count($cellData)+2;
+                $sheet->setBorder("A1:F".$rownumber, 'thin');
+      			});
+    		})
+         ->export('xls');
         exit;
     }
 }
