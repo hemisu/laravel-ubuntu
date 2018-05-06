@@ -57,7 +57,7 @@ class ClientExporter extends AbstractExporter
                   $cell->setFontSize(20);
                   $cell->setAlignment('center');
               })->row(1, ["丰舆车业客户列表 日期:".date('Y-m',time())]);;
-                $sheet->appendRow(2, ['序号','姓名','性别','联系方式','生日','购车','地址']);
+                $sheet->appendRow(2, ['序号','姓名','性别','联系方式','生日','地址','购车']);
                 //填充数据
       			    $sheet->rows($cellData);
                 //绘制边界
