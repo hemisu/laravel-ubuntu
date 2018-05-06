@@ -91,6 +91,7 @@ class ClientController extends Controller
                 .$v.'</a>':"";
             });
             $grid->phone('手机')->prependIcon('phone');
+            $grid->salesrecord();
             $grid->address('地址')->prependIcon('map-marker');
             $grid->model()->orderBy('created_at','desc');
             $grid->filter(function($filter){
