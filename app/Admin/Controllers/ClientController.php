@@ -90,8 +90,7 @@ class ClientController extends Controller
                 return $v?'<a href="'.url('admin/client/'.$this->id.'/salesrecord').'">'
                 .$v.'</a>':"";
             });
-            $grid->phone('手机')->prependIcon('phone');
-            $grid->salesrecord()->display(function($arr) {
+            $grid->salesrecord('已购')->display(function($arr) {
                 $temp = '';
                 foreach ($arr as $value){
                     $stock = Stock::find($value['stock_id'])->name;
@@ -99,6 +98,7 @@ class ClientController extends Controller
                 }
                 return $temp;
             });
+            $grid->phone('手机')->prependIcon('phone');
             $grid->address('地址')->prependIcon('map-marker');
             $grid->model()->orderBy('created_at','desc');
             $grid->filter(function($filter){
