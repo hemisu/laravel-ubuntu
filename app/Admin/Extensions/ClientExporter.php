@@ -25,9 +25,10 @@ class ClientExporter extends AbstractExporter
             $row['sex'] = ($row['sex'] == 1)? '男' : '女';
             $row = ['index'=> $index++]+array_only($row, $titles);//筛选需要的列并且加上序号
             $temp = '';
-            foreach ($row['salesrecord'] as $value){
+            foreach ($row['salesrecord'] as $key=>$value){
                 $stock = Stock::find($value['stock_id'])->name;
-                $temp .= $stock."|";
+                $temp .= $stock;
+                if($key) $temp .= "|";
             }
             $row['salesrecord'] = $temp;
             $cellData[] = $row;
