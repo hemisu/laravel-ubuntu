@@ -95,7 +95,7 @@ class ClientController extends Controller
                 $temp = '';
                 foreach ($arr as $value){
                     $stock = Stock::find($value['stock_id'])->name;
-                    $temp .= ;
+                    $temp .= $stock.'<br />';
                 }
                 return $temp;
             });
