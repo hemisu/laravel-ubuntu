@@ -27,14 +27,14 @@ class ClientExporter extends AbstractExporter
             $temp = '';
             foreach ($row['salesrecord'] as $value){
                 $stock = Stock::find($value['stock_id'])->name;
-                $temp .= $stock.'<br />';
+                $temp .= $stock."\r\n";
             }
             $row['salesrecord'] = $temp;
             $cellData[] = $row;
         }
 
         // 导出文件，
-//         var_dump($cellData);
+        // var_dump($cellData);
     		Excel::create($filename,function($excel) use ($cellData){
       			$excel->sheet('score', function($sheet) use ($cellData){
                 //设置格式
