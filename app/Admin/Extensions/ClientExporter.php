@@ -27,7 +27,7 @@ class ClientExporter extends AbstractExporter
             $temp = '';
             foreach ($row['salesrecord'] as $value){
                 $stock = Stock::find($value['stock_id'])->name;
-                $temp .= $stock."\r\n";
+                $temp .= $stock."<br />";
             }
             $row['salesrecord'] = $temp;
             $cellData[] = $row;
@@ -45,7 +45,7 @@ class ClientExporter extends AbstractExporter
                     ]
                 ])->setWidth([
                     'A' => 6,
-                    'B' => 25,
+                    'B' => 12,
                     'C' => 6,
                     'D' => 15,
                     'E' => 15,
@@ -53,7 +53,7 @@ class ClientExporter extends AbstractExporter
                     'G' => 25,
                 ]);;
                 //首行标题
-                $sheet->mergeCells('A1:F1')->cell('A1:F1', function($cell) {
+                $sheet->mergeCells('A1:G1')->cell('A1:G1', function($cell) {
                   $cell->setFontSize(20);
                   $cell->setAlignment('center');
               })->row(1, ["丰舆车业客户列表 日期:".date('Y-m',time())]);;
@@ -62,7 +62,7 @@ class ClientExporter extends AbstractExporter
       			    $sheet->rows($cellData);
                 //绘制边界
                 $rownumber = count($cellData)+2;
-                $sheet->setBorder("A1:F".$rownumber, 'thin');
+                $sheet->setBorder("A1:G".$rownumber, 'thin');
       			});
     		})
          ->export('xls');
