@@ -94,7 +94,8 @@ class ClientController extends Controller
             $grid->salesrecord()->display(function($arr) {
                 $temp = '';
                 foreach ($arr as $value){
-                    $temp .= $value['stock_id'];
+                    $stock = Stock::find($value['stock_id'])->name;
+                    $temp .= ;
                 }
                 return $temp;
             });
