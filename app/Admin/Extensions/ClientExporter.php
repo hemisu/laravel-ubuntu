@@ -52,20 +52,19 @@ class ClientExporter extends AbstractExporter
                     'D' => 15,
                     'E' => 15,
                     'F' => 25,
-                    'G' => 25,
-                    'H' => 20,
+                    'G' => 40,
                 ]);;
                 //首行标题
-                $sheet->mergeCells('A1:H1')->cell('A1:H1', function($cell) {
+                $sheet->mergeCells('A1:G1')->cell('A1:G1', function($cell) {
                   $cell->setFontSize(20);
                   $cell->setAlignment('center');
               })->row(1, ["丰舆车业客户列表 日期:".date('Y-m',time())]);;
-                $sheet->appendRow(2, ['序号','姓名','性别','联系方式','生日','地址','购车','录入日期']);
+                $sheet->appendRow(2, ['序号','姓名','性别','联系方式','生日','地址','购车']);
                 //填充数据
       			    $sheet->rows($cellData);
                 //绘制边界
                 $rownumber = count($cellData)+2;
-                $sheet->setBorder("A1:H".$rownumber, 'thin');
+                $sheet->setBorder("A1:G".$rownumber, 'thin');
       			});
     		})
          ->export('xls');
