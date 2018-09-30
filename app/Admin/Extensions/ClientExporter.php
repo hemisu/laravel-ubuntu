@@ -20,10 +20,10 @@ class ClientExporter extends AbstractExporter
         // dd($data);
         // var_dump($data);
         $titles = ['name','sex','phone','birth','salesrecord','address'];
-        $index = 0;//序号
+        $index = count($data);//序号
         foreach ($data as $row) {
             $row['sex'] = ($row['sex'] == 1)? '男' : '女';
-            $row = ['index'=> $index++]+array_only($row, $titles);//筛选需要的列并且加上序号
+            $row = ['index'=> $index--]+array_only($row, $titles);//筛选需要的列并且加上序号
             $temp = '';
             foreach ($row['salesrecord'] as $key=>$value){
                 $stock = Stock::find($value['stock_id'])->name;
@@ -31,6 +31,7 @@ class ClientExporter extends AbstractExporter
                 if($key) $temp .= "|";
             }
             $row['salesrecord'] = $temp;
+            $row['created_at'] = date('Y-m-d', strtotime($row['salesrecord']['created_at']));
             $cellData[] = $row;
         }
 
@@ -52,18 +53,19 @@ class ClientExporter extends AbstractExporter
                     'E' => 15,
                     'F' => 25,
                     'G' => 25,
+                    'H' => 20,
                 ]);;
                 //首行标题
-                $sheet->mergeCells('A1:G1')->cell('A1:G1', function($cell) {
+                $sheet->mergeCells('A1:H1')->cell('A1:H1', function($cell) {
                   $cell->setFontSize(20);
                   $cell->setAlignment('center');
               })->row(1, ["丰舆车业客户列表 日期:".date('Y-m',time())]);;
-                $sheet->appendRow(2, ['序号','姓名','性别','联系方式','生日','地址','购车']);
+                $sheet->appendRow(2, ['序号','姓名','性别','联系方式','生日','地址','购车','录入日期']);
                 //填充数据
       			    $sheet->rows($cellData);
                 //绘制边界
                 $rownumber = count($cellData)+2;
-                $sheet->setBorder("A1:G".$rownumber, 'thin');
+                $sheet->setBorder("A1:H".$rownumber, 'thin');
       			});
     		})
          ->export('xls');

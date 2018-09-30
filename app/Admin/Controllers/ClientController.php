@@ -197,8 +197,7 @@ class ClientController extends Controller
             $content->row(function($row) use ($id){
 
             });
-            $headers = ['客户名', '性别', '手机', '生日', '地址', '操作'
-            ];
+            $headers = ['客户名', '性别', '手机', '生日', '地址', '操作'];
 
             $clientInfo = Client::where('id', '=', $id)->first();
             $rows = [
@@ -218,11 +217,12 @@ class ClientController extends Controller
                     $stockRecordinfo->frame_number,
                     $stockRecordinfo->bettery_type,
                     $stockRecordinfo->remarks,
+                    date('Y-m-d', strtotime($stockRecordinfo->created_at)),
                     '<a href="'.url('admin/salerecord/'.$stockRecordinfo->id.'/edit').'"><i class="fa fa-edit"></i>修改订单</a>',
                 ];
             }
             // dd($stockInfos);
-            $stockRecordHeaders = ['订单号', '名称', '售价', '电机号', '车架号', '电池型号', '备注', '操作'];
+            $stockRecordHeaders = ['订单号', '名称', '售价', '电机号', '车架号', '电池型号', '备注', '录入日期', '操作'];
             $content->row((new Box('订单信息', new Table($stockRecordHeaders, $stockrows)))->style('primary')->solid());
         });
     }
