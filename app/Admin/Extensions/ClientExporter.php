@@ -24,6 +24,7 @@ class ClientExporter extends AbstractExporter
         foreach ($data as $row) {
             $row['sex'] = ($row['sex'] == 1)? '男' : '女';
             $row = ['index'=> $index--]+array_only($row, $titles);//筛选需要的列并且加上序号
+            $row['created_at'] = date('Y-m-d', strtotime($row['salesrecord']['created_at']));
             $temp = '';
             foreach ($row['salesrecord'] as $key=>$value){
                 $stock = Stock::find($value['stock_id'])->name;
@@ -31,7 +32,6 @@ class ClientExporter extends AbstractExporter
                 if($key) $temp .= "|";
             }
             $row['salesrecord'] = $temp;
-            $row['created_at'] = date('Y-m-d', strtotime($row['salesrecord']['created_at']));
             $cellData[] = $row;
         }
 
