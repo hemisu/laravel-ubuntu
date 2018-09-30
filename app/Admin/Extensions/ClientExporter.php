@@ -53,7 +53,7 @@ class ClientExporter extends AbstractExporter
                     'E' => 15,
                     'F' => 25,
                     'G' => 40,
-                ]);;
+                ])->getAlignment()->setWrapText(true);
                 //首行标题
                 $sheet->mergeCells('A1:G1')->cell('A1:G1', function($cell) {
                   $cell->setFontSize(20);
