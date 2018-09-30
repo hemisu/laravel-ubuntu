@@ -93,7 +93,7 @@ class ClientController extends Controller
             $grid->salesrecord('已购')->display(function($arr) {
                 $temp = '';
                 foreach ($arr as $value){
-                    $stock = Stock::find($value['stock_id'])->name;
+                    $stock = Stock::find($value['stock_id'])->name.'('.date('Y-m-d', strtotime($value['create_at'])).')';
                     $temp .= $stock.'<br />';
                 }
                 return $temp;
